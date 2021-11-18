@@ -18,12 +18,17 @@ from django.urls import path, include
 from cuboid.api.views import *
 #from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework.authtoken import views
+from cuboid.api.views import RegisterAPI, LoginAPI
+from knox import views as knox_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path('auth/login/', obtain_jwt_token, name='login'),
     #path('cuboid/', include('cuboid.api.urls', namespace='cuboid-api')),
-    path('api-token-auth/', views.obtain_auth_token , name='api_token_auth'),
+    #path('api-token-auth/', views.obtain_auth_token , name='api_token_auth'),
+    path('api/register/', RegisterAPI.as_view(), name='register'),
+    path('api/login/', LoginAPI.as_view(), name='login'),
+    path('api/logout/', knox_views.LogoutView.as_view(), name='logout'),
     path('', CuboidListAPIView.as_view(), name='cuboid-listcreate'),
     path('new/', CuboidCreateAPIView.as_view(), name='cuboid-create'),
     path('<int:pk>', CuboidRudView.as_view(), name='cuboid-rud'),

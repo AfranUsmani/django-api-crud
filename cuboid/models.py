@@ -16,7 +16,11 @@ class Cuboid(models.Model):
 
     def __str__(self):
         return str(self.user.username)
-
+    
+    @property
+    def owner(self):
+        return self.user
+    
     def get_api_url(self, request=None):
         return api_reverse("cuboid-rud", kwargs={'pk': self.pk}, request=request)
 
